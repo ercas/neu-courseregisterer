@@ -5,18 +5,58 @@
         <title>butt</title>
         <script type=text/javascript src=popup.js></script>
         <style>
-            button {
-                width: 100%;
+            body {
+                color: #515151;
             }
 
-            button, input {
+            button {
+                color: #ffffff;
+                background-color: #cc2121;
+                width: 100%;
+                border: none;
+            }
+
+            #next:active, #prev:active {
+                color: #999999;
+            }
+
+            #next:hover, #prev:hover {
+                background-color: #cc0000;
+            }
+
+            input {
+                color: inherit;
+                border-width: 1px;
+                border-color: #636363;
+            }
+
+            button, input, #pageNum {
+                font-weight: bold;
+                text-align: center;
+                padding: 6px 12px;
                 margin: 2px 0px;
             }
 
+            table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+
+            td {
+                padding: 0;
+            }
         </style>
     </head>
     <body>
-        enter your CRNs in advance:
+        Enter your CRNs in advance:
+        <br>
+        <table>
+            <tr>
+                <td><button id=prev>&lt;</button></td>
+                <td><button id=pageNum>Option 1/5</button></td>
+                <td><button id=next>&gt;</button></td>
+            </tr>
+        </table>
         <input></input>
         <input></input>
         <input></input>
@@ -25,11 +65,10 @@
         <input></input>
         <input></input>
         <input></input>
-        <button id=main>ok</button>
-        press "ok" when you're on the add/drop classes page and this plugin will
-        automatically fill in the fields and press submit.
-        <br><br>
-        if you can't see this plugin in your window, copy and paste the current
-        url into a new tab
+        <button id=main>OK</button>
+        <br>
+        Press "OK" when you're on the add/drop classes page and this plugin will
+        automatically fill in the fields and press submit. If you can't see this
+        plugin in the window, copy and paste the current url into a new tab.
     </body>
 </html>
