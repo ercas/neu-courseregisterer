@@ -2,7 +2,6 @@ var inputs = document.getElementsByTagName("input");
 var currentOption = 0;
 var options = 5;
 var allCrns = [];
-
 for (var i = 0; i < options; i++) {
     allCrns[i] = [];
 }
@@ -32,12 +31,14 @@ function getCrns() {
     return crns;
 }
 
+// save on every input update
 function bindInputs() {
     for (var input of inputs) {
         input.addEventListener("input", save);
     }
 }
 
+// disable saving on every input update
 function unbindInputs() {
     for (var input of inputs) {
         input.removeEventListener("input", save);
@@ -90,9 +91,8 @@ function cycle(inc) {
     load();
     getCrns();
 }
-function prev() { cycle(-1); }
-function next() { cycle(1); }
 
+// clear the current crns
 function clear() {
     for (var input of inputs) {
         input.value = "";
@@ -104,7 +104,15 @@ function clear() {
 document.addEventListener("DOMContentLoaded", function() {
     load();
     document.getElementById("main").addEventListener("click", inject);
-    document.getElementById("prev").addEventListener("click", prev);
-    document.getElementById("next").addEventListener("click", next);
+    document.getElementById("prev").addEventListener("click", function() {
+        cycle(-1);
+    });
+    document.getElementById("next").addEventListener("click", function() {
+        cycle(1);
+    });
     document.getElementById("clear").addEventListener("click", clear);
+    document.getElementById("version").addEventListener("click", function() {
+        chrome.tabs.executeScript({code: "window.location = \"https://github.com/ercas/neu-courseregisterer\""})
+        window.setTimeout(window.close, 50);
+    });
 })

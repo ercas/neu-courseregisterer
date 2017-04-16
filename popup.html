@@ -14,6 +14,7 @@
                 background-color: #cc2121;
                 width: 100%;
                 border: none;
+                cursor: pointer;
             }
 
             #next:active, #prev:active, #clear:active {
@@ -45,6 +46,14 @@
             td {
                 padding: 0;
             }
+
+            #version {
+                text-align: right;
+                font-size: 10px;
+                color: #999999;
+                cursor: pointer;
+                text-decoration: underline;
+            }
         </style>
     </head>
     <body>
@@ -73,5 +82,7 @@
         Press "OK" when you're on the add/drop classes page and this plugin will
         automatically fill in the fields and press submit. If you can't see this
         plugin in the window, copy and paste the current url into a new tab.
+        <br>
+        <div id=version>v1.0</div>
     </body>
 </html>
