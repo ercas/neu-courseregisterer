@@ -16,11 +16,11 @@
                 border: none;
             }
 
-            #next:active, #prev:active {
+            #next:active, #prev:active, #clear:active {
                 color: #999999;
             }
 
-            #next:hover, #prev:hover {
+            #next:hover, #prev:hover, #clear:hover {
                 background-color: #cc0000;
             }
 
@@ -54,17 +54,20 @@
             <tr>
                 <td><button id=prev>&lt;</button></td>
                 <td><button id=pageNum>Option 1/5</button></td>
+                <td><button id=clear>x</button></td>
                 <td><button id=next>&gt;</button></td>
             </tr>
         </table>
-        <input></input>
-        <input></input>
-        <input></input>
-        <input></input>
-        <input></input>
-        <input></input>
-        <input></input>
-        <input></input>
+        <div id=inputs>
+            <input></input>
+            <input></input>
+            <input></input>
+            <input></input>
+            <input></input>
+            <input></input>
+            <input></input>
+            <input></input>
+        </div>
         <button id=main>OK</button>
         <br>
         Press "OK" when you're on the add/drop classes page and this plugin will

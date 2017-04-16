@@ -1,4 +1,11 @@
 var inputs = document.getElementsByTagName("input");
+var currentOption = 0;
+var options = 5;
+var allCrns = [];
+
+for (var i = 0; i < options; i++) {
+    allCrns[i] = [];
+}
 
 // validate a crn
 function validate(crn) {
@@ -21,46 +28,83 @@ function getCrns() {
             inputs[i].setAttribute("style", "background: #ffb6c1;");
         }
     }
+    allCrns[currentOption] = crns;
     return crns;
+}
+
+function bindInputs() {
+    for (var input of inputs) {
+        input.addEventListener("input", save);
+    }
+}
+
+function unbindInputs() {
+    for (var input of inputs) {
+        input.removeEventListener("input", save);
+    }
 }
 
 // save crns to local storage
 function save() {
-    var crns = getCrns();
-    if (crns.length > 0) {
-        chrome.storage.local.set({"crns": crns}, function() {
-            console.log("saved crns: " + crns);
-        });
-    }
+    getCrns();
+    chrome.storage.local.set({"crns": allCrns}, function() {
+        console.log("saved crns: " + JSON.stringify(allCrns));
+    });
 }
 
 // load crns from local storage
 function load() {
     chrome.storage.local.get("crns", function(savedCrns) {
         if (savedCrns.crns) {
-            var crns = savedCrns.crns;
+            var crns = savedCrns.crns[currentOption];
             for (var i = 0; i < crns.length; i++) {
                 inputs[i].value = crns[i];
             }
         }
-        for (var input of inputs) {
-            input.addEventListener("input", function() {
-                console.log("new crn: " + input.value);
-                save();
-            });
-        }
+        bindInputs();
         getCrns();
     });
 }
 
 // inject crns variable into document and the code that uses it
-function run() {
+function inject() {
     // very ugly
-    chrome.tabs.executeScript({code: "var crns = [" + getCrns() + "]"});
+    chrome.tabs.executeScript({code: "var crns = [" + allCrns[currentOption] + "]"});
     chrome.tabs.executeScript({file: "input.js"});
+    window.setTimeout(window.close, 50);
+}
+
+// cycle different crn combinations
+function cycle(inc) {
+    currentOption = (currentOption + inc) % options;
+    if (currentOption < 0) {
+        currentOption = options - 1;
+    }
+    document.getElementById("pageNum").innerHTML = "Option "
+                                                   + (currentOption + 1)
+                                                   + "/" + options;
+    unbindInputs();
+    for (var input of inputs) {
+        input.value = "";
+    }
+    load();
+    getCrns();
+}
+function prev() { cycle(-1); }
+function next() { cycle(1); }
+
+function clear() {
+    for (var input of inputs) {
+        input.value = "";
+    }
+    getCrns();
+    save();
 }
 
 document.addEventListener("DOMContentLoaded", function() {
     load();
-    document.getElementById("main").addEventListener("click", run);
+    document.getElementById("main").addEventListener("click", inject);
+    document.getElementById("prev").addEventListener("click", prev);
+    document.getElementById("next").addEventListener("click", next);
+    document.getElementById("clear").addEventListener("click", clear);
 })
