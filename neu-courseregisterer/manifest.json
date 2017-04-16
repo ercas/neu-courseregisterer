@@ -3,7 +3,7 @@
 
   "name": "neu-autocourseregister",
   "description": "automatically enter crns into add/dop classes and submit the form",
-  "version": "1.0",
+  "version": "1.1",
 
   "browser_action": {
     "default_icon": "icon.png",
